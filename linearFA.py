@@ -195,7 +195,7 @@ def run_agent(env, verbose=False):
     tot_time = 0
     tot_reward = 0
 
-    file=open('time_bf1.csv', 'w+')
+    file=open('tile-codings.csv', 'w+')
     file.write("Episode" + "," + "Score" + "\n")
 
     for episode_index in range(max_episodes_to_run):
@@ -229,7 +229,7 @@ def run_agent(env, verbose=False):
                 print("Episode {} finished after {} timesteps.".format(episode_index + 1, timestep_index + 1))
                 file.write(str(episode_index)+","+str(tot_time)+'\n')
 
-                print("Total reward ", tot_time)
+                #print("Total reward ", tot_time)
 
                 episode_history[episode_index] = timestep_index + 1
                 if verbose or episode_index % plot_redraw_frequency == 0:
