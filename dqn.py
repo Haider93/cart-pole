@@ -93,11 +93,11 @@ if __name__ == "__main__":
     agent_q = QAgent(action_dist)
 
     def train():
-        file = open('reward.csv','w')
-        file.write("Episodes"+","+"reward"+"\n")
+#         file = open('reward.csv','w')
+#         file.write("Episodes"+","+"reward"+"\n")
 
-        # file = open('TD_Q_mvd.csv', 'w')
-        # file.write("Episodes"+","+"time"+"\n")
+        file = open('dqn.csv', 'w')
+        file.write("Episodes"+","+"time"+"\n")
 
         ##dqn agent
 
@@ -146,111 +146,12 @@ if __name__ == "__main__":
                     score += time
                     print("episode: {}/{}, score: {}, cum_reward :{}"
                           .format(e, EPISODES, score, tot_reward))
-                    file.write(str(e)+","+str(tot_reward)+"\n")
+                    file.write(str(e)+","+str(score)+"\n")
                     #agent.update_target_model()
                     # print("episode: {}/{}, score: {}, e: {:.2}"
                     #       .format(e, EPISODES, time, agent.epsilon))
                     break
         file.close()
         agent_q.save()
-        #agent.save("cartpole-dqn.h5")
-        # file = open("test_TD1.csv", 'w+')
-        # file.write("Episodes" + "," + "time_TD" + "\n")
-        # params = agent_q.read()
-        # action_dist_test = []
-        # action_dist_test.append(scipy.stats.norm(float(params[0]), float(params[1])))
-        # action_dist_test.append(scipy.stats.norm(float(params[2]), float(params[3])))
-        # agent_q_test = QAgent(action_dist_test)
-        # for e in range(20):
-        #     state = env.reset()
-        #     state = np.reshape(state, [1, state_size])
-        #     flag = 0
-        #     for time in range(1200):
-        #         # uncomment this to see the actual rendering
-        #         env.render()
-        #
-        #         #action = agent.act(state)
-        #
-        #         ##qagent picks
-        #         state_normalized = agent_q_test.normalized_state(np.array(state))
-        #         action = agent_q_test.pick_action(agent_q_test.epsilon, action_dist, state_normalized)
-        #
-        #         next_state, reward, done, info = env.step(action)
-        #
-        #         reward = reward if not done else -10
-        #         next_state = np.reshape(next_state, [1, state_size])
-        #         #agent.remember(state, action, reward, next_state, done)
-        #         state = next_state
-        #         if done:
-        #             flag = 1
-        #             scores.append(time)
-        #             print("episode: {}/{}, score: {}"
-        #                   .format(e, 20, time))
-        #             file.write(str(e) + "," + str(time) + "\n")
-        #             break
-        #
-        # file.close()
-
-
-
-    ##test
-    def test():
-        file = open("test_TD_mvd.csv", 'w+')
-        #agent = DQNAgent(state_size, action_size)
-        #agent_q.load("cartpole-dqn.h5")
-
-        params = agent_q.read()
-        action_dist = []
-        # action_dist.append(scipy.stats.norm(float(params[0]), float(params[1])))
-        # action_dist.append(scipy.stats.norm(float(params[2]), float(params[3])))
-
-        action_dist.append(scipy.stats.multivariate_normal(float(params[0]), float(params[1])))
-        action_dist.append(scipy.stats.multivariate_normal(float(params[2]), float(params[3])))
-        agent_q_test = QAgent(action_dist)
-        scores = []
-        for e in range(20):
-            state = env.reset()
-            state = np.reshape(state, [1, state_size])
-            flag = 0
-            for time in range(1200):
-                # uncomment this to see the actual rendering
-                env.render()
-
-                #action = agent.act(state)
-
-                ##qagent picks
-                state_normalized = agent_q_test.normalized_state(np.array(state))
-                action = agent_q_test.pick_action(agent_q_test.epsilon, action_dist, state_normalized)
-
-                next_state, reward, done, info = env.step(action)
-
-                reward = reward if not done else -10
-                next_state = np.reshape(next_state, [1, state_size])
-                #agent.remember(state, action, reward, next_state, done)
-                state = next_state
-                if done:
-                    flag = 1
-                    scores.append(time)
-                    print("episode: {}/{}, score: {}"
-                          .format(e, 20, time))
-                    file.write(str(e) + "," + str(time) + "\n")
-                    break
-
-        file.close()
-
-
-            #
-            # if len(agent.memory) > batch_size:
-            #     agent.replay(batch_size)
-        # if flag == 0:
-        #     print("episode: {}/{}, score: {}, e: {:.2}".format(e, EPISODES, time, agent.epsilon))
-        # if e % 100 == 0:
-        #     print('saving the model')
-        #     agent.save("model/cartpole-dqn.h5")
-        #     # saving the figure
-        #     plt.plot(scores)
-        #     plt.savefig('score_plot')
-
 
     train()
-    #test()
